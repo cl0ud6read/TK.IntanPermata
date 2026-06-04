@@ -64,7 +64,7 @@ Follow these steps to set up the project locally for development or testing.
 
 2. **Navigate to the project folder:**
     ```bash
-    cd inventory-management-system-main-procces
+    cd TK.IntanPermata
     ```
 
 3. **Install PHP dependencies:**
