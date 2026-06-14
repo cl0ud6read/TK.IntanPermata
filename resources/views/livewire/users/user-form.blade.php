@@ -6,7 +6,7 @@
                 {{ $isEditing ? 'Ubah Pengguna' : 'Tambah Pengguna' }}
             </h3>
             <p class="text-sm text-muted-foreground">
-                {{ $isEditing ? 'Update user information.' : 'Add a new user to the system.' }}
+                {{ $isEditing ? 'Ubah detail pengguna di bawah ini.' : 'Tambahkan pengguna baru ke sistem.' }}
             </p>
         </div>
 
@@ -14,11 +14,11 @@
             <!-- Name -->
             <x-form-input
                 name="name"
-                label="Nama"
+                label="Nama Lengkap"
                 type="text"
                 wire:model="name"
                 required
-                placeholder="Full Name"
+                placeholder="Nama Lengkap"
             />
 
             <!-- Username -->
@@ -28,7 +28,7 @@
                 type="text"
                 wire:model="username"
                 required
-                placeholder="Unique username"
+                placeholder="Username unik"
             />
 
             <!-- Email -->
@@ -38,13 +38,13 @@
                 type="email"
                 wire:model="email"
                 required
-                placeholder="email@example.com"
+                placeholder="email@contoh.com"
             />
 
             <!-- Password -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="space-y-2">
-                    <x-input-label for="password" :value="__('Password')" />
+                    <x-input-label for="password" :value="__('Password')" :required="!$isEditing" />
                     <x-text-input
                         id="password"
                         name="password"
@@ -52,13 +52,13 @@
                         wire:model="password"
                         :required="!$isEditing"
                         autocomplete="new-password"
-                        placeholder="{{ $isEditing ? 'Leave blank to keep current' : 'Min 8 chars' }}"
+                        placeholder="{{ $isEditing ? 'Kosongkan jika tidak diubah' : 'Min 8 karakter' }}"
                     />
                     <x-input-error :messages="$errors->get('password')" />
                 </div>
 
                 <div class="space-y-2">
-                    <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                    <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" :required="!$isEditing" />
                     <x-text-input
                         id="password_confirmation"
                         name="password_confirmation"
