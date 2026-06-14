@@ -5,7 +5,7 @@
                 {{ __('Daftar Pengguna') }}
             </h2>
             @if(auth()->user()->role === 'admin')
-            <x-primary-button x-data x-on:click="$dispatch('open-modal', { name: 'user-form-modal' })">
+            <x-primary-button x-data x-on:click="$dispatch('create-user')">
                 <x-heroicon-o-plus class="w-4 h-4 mr-2" />
                 {{ __('Tambah Pengguna') }}
             </x-primary-button>
