@@ -58,15 +58,15 @@ class UserService
         }
 
         if ($user->sales()->exists()) {
-            throw ValidationException::withMessages(['user' => 'Cannot delete user who has recorded sales.']);
+            throw ValidationException::withMessages(['user' => 'Tidak dapat menghapus pengguna yang memiliki riwayat penjualan.']);
         }
 
         if (Purchase::where('created_by', $user->id)->exists()) {
-            throw ValidationException::withMessages(['user' => 'Cannot delete user who has recorded purchases.']);
+            throw ValidationException::withMessages(['user' => 'Tidak dapat menghapus pengguna yang memiliki riwayat pembelian.']);
         }
 
         if (FinanceTransaction::where('created_by', $user->id)->exists()) {
-            throw ValidationException::withMessages(['user' => 'Cannot delete user who has recorded finance transactions.']);
+            throw ValidationException::withMessages(['user' => 'Tidak dapat menghapus pengguna yang memiliki riwayat transaksi keuangan.']);
         }
 
         $user->delete();
