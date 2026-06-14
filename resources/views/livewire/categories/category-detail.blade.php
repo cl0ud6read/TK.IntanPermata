@@ -52,7 +52,7 @@
                 </x-secondary-button>
                 <x-primary-button type="button" x-on:click="$dispatch('close-modal', { name: 'category-detail-modal' }); $dispatch('edit-category', { category: {{ $category->id }} })">
                     <x-heroicon-o-pencil-square class="w-4 h-4 mr-2" />
-                    {{ __('Edit Category') }}
+                    {{ __('Ubah Kategori') }}
                 </x-primary-button>
             </div>
         </div>

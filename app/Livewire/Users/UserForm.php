@@ -76,10 +76,10 @@ class UserForm extends Component
         try {
             if ($this->isEditing && $this->user) {
                 $service->updateUser($this->user, $data);
-                $message = 'User updated successfully.';
+                $message = 'Pengguna berhasil diperbarui.';
             } else {
                 $service->createUser($data);
-                $message = 'User created successfully.';
+                $message = 'Pengguna berhasil dibuat.';
             }
 
             $this->dispatch('close-modal', name: 'user-form-modal');
@@ -90,7 +90,7 @@ class UserForm extends Component
             $this->reset(['user', 'isEditing', 'name', 'username', 'email', 'password', 'password_confirmation']);
 
         } catch (\Exception $e) {
-            $this->dispatch('toast', message: 'Error: ' . $e->getMessage(), type: 'error');
+            $this->dispatch('toast', message: 'Terjadi kesalahan: ' . $e->getMessage(), type: 'error');
         }
     }
 

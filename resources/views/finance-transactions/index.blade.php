@@ -1,13 +1,15 @@
-<x-app-layout title="Finance Transactions">
+<x-app-layout title="Transaksi Keuangan">
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-foreground leading-tight">
-                {{ __('Finance Transactions') }}
+                {{ __('Transaksi Keuangan') }}
             </h2>
+            @if(auth()->user()->role === 'admin')
             <x-primary-button x-data x-on:click="$dispatch('create-finance-transaction')">
                 <x-heroicon-o-plus class="w-4 h-4 mr-2" />
-                {{ __('Create Transaction') }}
+                {{ __('Tambah Transaksi') }}
             </x-primary-button>
+            @endif
         </div>
     </x-slot>
 

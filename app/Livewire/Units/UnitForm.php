@@ -65,10 +65,10 @@ class UnitForm extends Component
         try {
             if ($this->isEditing && $this->unit) {
                 $service->updateUnit($this->unit, $data);
-                $message = 'Unit updated successfully.';
+                $message = 'Satuan berhasil diperbarui.';
             } else {
                 $service->createUnit($data);
-                $message = 'Unit created successfully.';
+                $message = 'Satuan berhasil dibuat.';
             }
 
             $this->dispatch('close-modal', name: 'unit-form-modal');

@@ -70,10 +70,10 @@ class CategoryForm extends Component
         try {
             if ($this->isEditing && $this->category) {
                 $service->updateCategory($this->category, $data);
-                $message = 'Category updated successfully.';
+                $message = 'Kategori berhasil diperbarui.';
             } else {
                 $service->createCategory($data);
-                $message = 'Category created successfully.';
+                $message = 'Kategori berhasil dibuat.';
             }
 
             $this->dispatch('close-modal', name: 'category-form-modal');

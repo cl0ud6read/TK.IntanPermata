@@ -14,12 +14,12 @@ enum DatePeriod: string
     public function label(): string
     {
         return match($this) {
-            self::TODAY => 'Today',
-            self::YESTERDAY => 'Yesterday',
-            self::THIS_WEEK => 'This Week',
-            self::THIS_MONTH => 'This Month',
-            self::LAST_MONTH => 'Last Month',
-            self::CUSTOM => 'Custom Period',
+            self::TODAY => 'Hari Ini',
+            self::YESTERDAY => 'Kemarin',
+            self::THIS_WEEK => 'Minggu Ini',
+            self::THIS_MONTH => 'Bulan Ini',
+            self::LAST_MONTH => 'Bulan Lalu',
+            self::CUSTOM => 'Periode Kustom',
         };
     }
 }

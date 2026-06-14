@@ -66,6 +66,7 @@ class FinanceTransactionForm extends Component
     #[On('create-finance-transaction')]
     public function create(): void
     {
+        abort_if(auth()->user()->role !== 'admin', 403, 'Unauthorized action.');
         $this->reset(['transaction', 'isEditing', 'finance_category_id', 'amount', 'description', 'external_reference']);
         $this->type = 'expense'; // Reset to default
         $this->transaction_date = now()->format('Y-m-d');
@@ -76,6 +77,7 @@ class FinanceTransactionForm extends Component
     #[On('edit-finance-transaction')]
     public function edit(FinanceTransaction $transaction): void
     {
+        abort_if(auth()->user()->role !== 'admin', 403, 'Unauthorized action.');
         if ($transaction->reference_type) {
             $this->dispatch('toast', message: 'System transactions (Sales/Purchases) cannot be edited.', type: 'error');
             return;
@@ -98,6 +100,7 @@ class FinanceTransactionForm extends Component
 
     public function save(FinanceTransactionService $service): void
     {
+        abort_if(auth()->user()->role !== 'admin', 403, 'Unauthorized action.');
         $this->validate();
 
         $data = new FinanceTransactionData(
@@ -112,10 +115,10 @@ class FinanceTransactionForm extends Component
         try {
             if ($this->isEditing && $this->transaction) {
                 $service->updateTransaction($this->transaction, $data);
-                $message = 'Transaction updated successfully.';
+                $message = 'Transaksi berhasil diperbarui.';
             } else {
                 $service->createTransaction($data);
-                $message = 'Transaction recorded successfully.';
+                $message = 'Transaksi berhasil dicatat.';
             }
 
             $this->dispatch('close-modal', name: 'finance-transaction-form-modal');
@@ -125,7 +128,7 @@ class FinanceTransactionForm extends Component
             $this->dispatch('toast', message: $e->getMessage(), type: 'error');
         } catch (\Throwable $e) {
             \Illuminate\Support\Facades\Log::error($e);
-            $this->dispatch('toast', message: 'Error: ' . $e->getMessage(), type: 'error');
+            $this->dispatch('toast', message: 'Terjadi kesalahan: ' . $e->getMessage(), type: 'error');
         }
     }
 

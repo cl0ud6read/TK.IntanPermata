@@ -48,8 +48,8 @@ class FinanceCategoryService
         try {
             DB::transaction(function () use ($category) {
                 // Protect System Categories
-                if (in_array($category->name, ['Product Sales', 'Product Purchases'])) {
-                    throw new \Exception('System categories (Product Sales, Product Purchases) cannot be deleted.');
+                if (in_array($category->name, ['Penjualan Produk', 'Pembelian Stok'])) {
+                    throw new \Exception('System categories (Penjualan Produk, Pembelian Stok) cannot be deleted.');
                 }
 
                 if ($category->transactions()->exists()) {

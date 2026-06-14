@@ -5,7 +5,7 @@
          @keydown.window.f1.prevent="productTs && productTs.focus()"
          @keydown.window.f2.prevent="customerTs && customerTs.focus()"
          @keydown.window.f3.prevent="openConfirmation()"
-         @keydown.window.f4.prevent="openCustomerModal()"
+         @keydown.window.f4.prevent="openPelangganModal()"
     >
         <div class="flex flex-col lg:flex-row h-[calc(100vh-100px)] space-y-4 lg:space-y-0 lg:space-x-4 relative">
 
@@ -15,7 +15,7 @@
                 <div class="relative z-20 mb-2">
                     <select
                         x-ref="productSelect"
-                        placeholder="Search Products (Name or SKU) [F1]..."
+                        placeholder="Cari Produk (Nama atau SKU) [F1]..."
                         autocomplete="off"
                     ></select>
                 </div>
@@ -95,39 +95,39 @@
                 </div>
             </div>
 
-            <!-- Right Side: Payment Details (30%) -->
+            <!-- Right Side: Detail Pembayaran (30%) -->
             <div class="w-full lg:w-[30%] flex flex-col bg-white rounded-lg shadow border border-gray-200 h-full">
                 <!-- Header -->
                 <div class="p-4 border-b border-gray-200 bg-gray-50 rounded-t-lg">
-                    <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wide">Payment Details</h2>
+                    <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wide">Detail Pembayaran</h2>
                 </div>
 
                 <div class="p-4 space-y-6 flex-1 overflow-y-auto">
-                    <!-- Customer Section -->
+                    <!-- Pelanggan Section -->
                     <div class="bg-indigo-50 rounded-lg p-4 border border-indigo-100 relative group">
                         <div class="flex justify-between items-start mb-2">
-                            <span class="text-xs font-bold text-indigo-500 uppercase">Customer</span>
-                            <button @click="openCustomerModal()" class="text-[10px] font-semibold text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-200 bg-white px-2 py-1 rounded transition-colors flex items-center">
-                                + New (F4)
+                            <span class="text-xs font-bold text-indigo-500 uppercase">Pelanggan</span>
+                            <button @click="openPelangganModal()" class="text-[10px] font-semibold text-indigo-600 hover:text-white hover:bg-indigo-600 border border-indigo-200 bg-white px-2 py-1 rounded transition-colors flex items-center">
+                                + Baru (F4)
                             </button>
                         </div>
 
                         <div class="relative">
-                            <template x-if="selectedCustomer">
+                            <template x-if="selectedPelanggan">
                                 <div class="flex justify-between items-center">
                                     <div>
-                                        <h3 class="font-bold text-lg text-gray-900" x-text="selectedCustomer.name"></h3>
-                                        <p class="text-sm text-gray-600" x-text="selectedCustomer.phone || 'No Phone'"></p>
+                                        <h3 class="font-bold text-lg text-gray-900" x-text="selectedPelanggan.name"></h3>
+                                        <p class="text-sm text-gray-600" x-text="selectedPelanggan.phone || 'No Phone'"></p>
                                     </div>
-                                    <button @click="resetCustomer()" class="text-gray-400 hover:text-red-500">
+                                    <button @click="resetPelanggan()" class="text-gray-400 hover:text-red-500">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                     </button>
                                 </div>
                             </template>
-                            <div x-show="!selectedCustomer">
+                            <div x-show="!selectedPelanggan">
                                 <select
                                     x-ref="customerSelect"
-                                    placeholder="Search Customer [F2]..."
+                                    placeholder="Cari Pelanggan [F2]..."
                                     autocomplete="off"
                                 ></select>
                             </div>
@@ -141,7 +141,7 @@
                             <span x-text="formatCurrency(subtotal)"></span>
                         </div>
                         <div class="flex justify-between items-center mt-2">
-                             <span class="text-sm font-medium text-gray-500">Discount (Global)</span>
+                             <span class="text-sm font-medium text-gray-500">Diskon (Global)</span>
                              <div class="relative w-32">
                                 <div class="absolute inset-y-0 flex items-center pointer-events-none" :class="window.currencyPosition === 'left' ? 'left-0 pl-2' : 'right-0 pr-2'">
                                     <span class="text-gray-500 sm:text-xs" x-text="window.currencySymbol"></span>
@@ -157,7 +157,7 @@
                              </div>
                         </div>
                         <div class="flex justify-between text-red-500 text-sm" x-show="totalDiscount > 0">
-                            <span>Total Discount</span>
+                            <span>Total Diskon</span>
                             <span x-text="'- ' + formatCurrency(totalDiscount)"></span>
                         </div>
                         <div class="flex justify-between items-center pt-4 border-t border-gray-100">
@@ -169,14 +169,14 @@
                     <!-- Payment Input -->
                     <div class="space-y-4 pt-4 border-t border-gray-200">
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Payment Method</label>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Metode Pembayaran</label>
                             <div class="grid grid-cols-2 gap-2">
                                 <button
                                     @click="payment.method = 'cash'"
                                     class="px-4 py-2 text-sm font-medium rounded-md border"
                                     :class="payment.method === 'cash' ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm' : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'"
                                 >
-                                    CASH
+                                    TUNAI
                                 </button>
                                 <button
                                     @click="payment.method = 'transfer'"
@@ -190,7 +190,7 @@
 
                         <template x-if="payment.method === 'cash'">
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Cash Received</label>
+                                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Tunai Diterima</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 flex items-center pointer-events-none" :class="window.currencyPosition === 'left' ? 'left-0 pl-3' : 'right-0 pr-3'">
                                         <span class="text-gray-500 font-bold" x-text="window.currencySymbol"></span>
@@ -208,7 +208,7 @@
                                 <!-- Quick Cash Buttons -->
                                 <div class="grid grid-cols-4 gap-2 mt-2">
                                     <button @click="payment.cash_received = total" class="px-2 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded text-xs font-bold text-gray-700">
-                                        EXACT
+                                        PAS
                                     </button>
                                     <button @click="payment.cash_received = (parseInt(payment.cash_received) || 0) + 100000" class="px-2 py-2 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded text-xs font-bold text-gray-700">
                                         +100K
@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="bg-green-50 p-3 rounded-md border border-green-100 flex justify-between items-center mt-2"
                                      :class="change < 0 ? 'bg-red-50 border-red-100 text-red-800' : 'bg-green-50 border-green-100 text-green-800'">
-                                    <span class="text-sm font-medium uppercase" x-text="change < 0 ? 'Due' : 'Change'"></span>
+                                    <span class="text-sm font-medium uppercase" x-text="change < 0 ? 'Due' : 'Kembalian'"></span>
                                     <span class="text-xl font-bold"
                                           :class="change < 0 ? 'text-red-700' : 'text-green-700'"
                                           x-text="formatCurrency(Math.abs(change))"></span>
@@ -247,7 +247,7 @@
                                 x-model="payment.notes"
                                 rows="3"
                                 class="block w-full text-sm border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-400 py-2"
-                                placeholder="Transaction Notes / Address..."
+                                placeholder="Catatan Transaksi / Alamat..."
                             ></textarea>
                         </div>
                     </div>
@@ -260,7 +260,7 @@
                         class="w-1/3 py-3 text-sm font-bold text-red-600 hover:text-white bg-white border border-red-200 hover:bg-red-600 rounded-lg flex items-center justify-center transition-colors shadow-sm"
                     >
                         <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                        CANCEL
+                        BATAL
                     </button>
 
                     <button
@@ -271,7 +271,7 @@
                         <template x-if="isSubmitting">
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                         </template>
-                        <span x-text="isSubmitting ? 'Processing...' : 'PAY (F3)'"></span>
+                        <span x-text="isSubmitting ? 'Memproses...' : 'BAYAR (F3)'"></span>
                     </button>
                 </div>
             </div>
@@ -282,7 +282,7 @@
             function pos() {
                 return {
                     cart: [],
-                    selectedCustomer: null,
+                    selectedPelanggan: null,
                     payment: {
                         method: 'cash',
                         cash_received: 0,
@@ -303,8 +303,8 @@
                         const savedCart = localStorage.getItem('pos_cart');
                         if (savedCart) this.cart = JSON.parse(savedCart);
 
-                        const savedCustomer = localStorage.getItem('pos_customer');
-                        if (savedCustomer) this.selectedCustomer = JSON.parse(savedCustomer);
+                        const savedPelanggan = localStorage.getItem('pos_customer');
+                        if (savedPelanggan) this.selectedPelanggan = JSON.parse(savedPelanggan);
 
                         const savedPayment = localStorage.getItem('pos_payment');
                         if (savedPayment) this.payment = JSON.parse(savedPayment);
@@ -314,12 +314,12 @@
 
                         // Watchers
                         this.$watch('cart', (val) => localStorage.setItem('pos_cart', JSON.stringify(val)));
-                        this.$watch('selectedCustomer', (val) => localStorage.setItem('pos_customer', JSON.stringify(val)));
+                        this.$watch('selectedPelanggan', (val) => localStorage.setItem('pos_customer', JSON.stringify(val)));
                         this.$watch('payment', (val) => localStorage.setItem('pos_payment', JSON.stringify(val)));
                         this.$watch('globalDiscount', (val) => localStorage.setItem('pos_globalDiscount', val));
 
                         this.initProductSelect();
-                        this.initCustomerSelect();
+                        this.initPelangganSelect();
                     },
 
                     initProductSelect() {
@@ -399,7 +399,7 @@
                         });
                     },
 
-                    initCustomerSelect() {
+                    initPelangganSelect() {
                         if (!this.$refs.customerSelect) return;
 
                         if (this.customerTs) {
@@ -449,7 +449,7 @@
                                         // The UI expects { id, name, phone, ... }
                                         // Our controller returns { value, text, name, phone }
                                         // So we map value to id for consistency if needed, or just use item.
-                                        this.selectedCustomer = {
+                                        this.selectedPelanggan = {
                                             id: item.value,
                                             name: item.name,
                                             phone: item.phone,
@@ -465,8 +465,8 @@
                         });
                     },
 
-                    resetCustomer() {
-                        this.selectedCustomer = null;
+                    resetPelanggan() {
+                        this.selectedPelanggan = null;
                         this.$nextTick(() => {
                             this.customerTs && this.customerTs.focus();
                         });
@@ -523,8 +523,8 @@
                         this.$dispatch('toast', { message: 'Product "' + removedItem.name + '" removed from cart.', type: 'info' });
                     },
 
-                    // Customer Modal Open
-                    openCustomerModal() {
+                    // Pelanggan Modal Open
+                    openPelangganModal() {
                         this.$dispatch('open-modal', { name: 'customer-modal' });
                         this.$nextTick(() => {
                             setTimeout(() => {
@@ -644,7 +644,7 @@
                             }));
 
                             const payload = {
-                                customer_id: this.selectedCustomer?.id,
+                                customer_id: this.selectedPelanggan?.id,
                                 items: items,
                                 payment_method: this.payment.method,
                                 cash_received: this.payment.cash_received,
@@ -717,7 +717,7 @@
 
                     resetForm() {
                         this.cart = [];
-                        this.selectedCustomer = null;
+                        this.selectedPelanggan = null;
                         this.payment = {
                             method: 'cash',
                             cash_received: 0,
@@ -738,17 +738,17 @@
                 <!-- Header -->
                 <div class="mb-6 space-y-1.5 text-center sm:text-left border-b border-gray-200 pb-4">
                     <h3 class="text-lg font-semibold leading-none tracking-tight text-foreground">
-                        Payment Confirmation
+                        Konfirmasi Pembayaran
                     </h3>
                     <p class="text-sm text-muted-foreground">
-                        Please review transaction details before processing.
+                        Harap periksa detail transaksi sebelum memproses.
                     </p>
                 </div>
 
                 <!-- Summary Grid -->
                 <div class="grid gap-4 py-4">
                     <div class="flex items-center justify-between">
-                        <span class="text-sm font-medium text-gray-500">Total Items</span>
+                        <span class="text-sm font-medium text-gray-500">Total Item</span>
                         <span class="font-semibold" x-text="cart.reduce((sum, item) => sum + parseInt(item.quantity), 0)"></span>
                     </div>
                     <div class="flex items-center justify-between">
@@ -760,20 +760,20 @@
                         <span class="font-semibold" x-text="'- ' + formatCurrency(totalDiscount)"></span>
                     </div>
                     <div class="flex items-center justify-between text-red-600" x-show="globalDiscount > 0">
-                        <span class="text-sm font-medium">Extra Discount (Global)</span>
+                        <span class="text-sm font-medium">Extra Diskon (Global)</span>
                         <span class="font-semibold" x-text="'- ' + formatCurrency(globalDiscount)"></span>
                     </div>
                     <div class="flex items-center justify-between border-t border-gray-100 pt-2 mt-2">
-                        <span class="text-lg font-bold">Total Bill</span>
+                        <span class="text-lg font-bold">Total Tagihan</span>
                         <span class="text-lg font-bold text-blue-600" x-text="formatCurrency(total)"></span>
                     </div>
 
                     <div class="flex items-center justify-between border-t border-gray-100 pt-2 mt-2" x-show="payment.method === 'cash'">
-                        <span class="text-sm font-medium text-gray-500">Cash Received</span>
+                        <span class="text-sm font-medium text-gray-500">Tunai Diterima</span>
                         <span class="font-semibold" x-text="formatCurrency(payment.cash_received)"></span>
                     </div>
                     <div class="flex items-center justify-between" x-show="payment.method === 'cash'">
-                        <span class="text-sm font-medium text-gray-500">Change</span>
+                        <span class="text-sm font-medium text-gray-500">Kembalian</span>
                         <span class="font-bold text-green-600" x-text="formatCurrency(change)"></span>
                     </div>
                 </div>
@@ -782,7 +782,7 @@
                 <div class="mt-6 border-t border-gray-200 pt-4 space-y-4">
                     <!-- Status Selection -->
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Sale Status</label>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Status Penjualan</label>
                         <div class="grid grid-cols-2 gap-2">
                             <button
                                 @click="saleStatus = 'completed'"
@@ -790,7 +790,7 @@
                                 :class="saleStatus === 'completed' ? 'bg-green-600 text-white border-green-600 shadow-sm' : 'bg-white text-gray-700 border-gray-300 hover:bg-green-50'"
                             >
                                 <svg x-show="saleStatus === 'completed'" class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                COMPLETED
+                                SELESAI
                             </button>
                             <button
                                 @click="saleStatus = 'pending'"
@@ -798,7 +798,7 @@
                                 :class="saleStatus === 'pending' ? 'bg-yellow-500 text-white border-yellow-500 shadow-sm' : 'bg-white text-gray-700 border-gray-300 hover:bg-yellow-50'"
                             >
                                 <svg x-show="saleStatus === 'pending'" class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                PENDING
+                                TERTUNDA
                             </button>
                         </div>
                     </div>
@@ -813,7 +813,7 @@
                             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                         </template>
                         <svg x-show="!isSubmitting" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        <span x-text="isSubmitting ? 'Processing...' : 'PROCESS SALE'"></span>
+                        <span x-text="isSubmitting ? 'Memproses...' : 'PROCESS SALE'"></span>
                     </button>
 
                     <x-secondary-button
@@ -827,7 +827,7 @@
             </div>
         </x-modal>
 
-        <!-- Create Customer Modal (Still using Blade/Alpine Hybrid for ease if reusable) -->
+        <!-- Tambah Pelanggan Modal (Still using Blade/Alpine Hybrid for ease if reusable) -->
         <x-modal name="customer-modal" focusable>
             <div class="p-6" x-data="{
                 newCust: { name: '', email: '', phone: '', address: '', notes: '' },
@@ -878,7 +878,7 @@
                 <!-- Header -->
                 <div class="mb-6 space-y-1.5 text-center sm:text-left border-b border-gray-200 pb-4">
                     <h3 class="text-lg font-semibold leading-none tracking-tight text-foreground">
-                        {{ __('Create New Customer') }}
+                        {{ __('Tambah Pelanggan Baru') }}
                     </h3>
                     <p class="text-sm text-muted-foreground">
                         {{ __('Add a new customer to your records for this sale.') }}
@@ -958,7 +958,7 @@
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                 </svg>
                             </template>
-                            <span x-text="loading ? 'Saving...' : 'Save Customer'"></span>
+                            <span x-text="loading ? 'Saving...' : 'Save Pelanggan'"></span>
                         </x-primary-button>
                     </div>
                 </div>
@@ -1001,7 +1001,7 @@
         </x-modal>
 
         <!-- Listen for customer created -->
-        <div @customer-created.window="selectedCustomer = $event.detail; customerSearch = '';"></div>
+        <div @customer-created.window="selectedPelanggan = $event.detail; customerSearch = '';"></div>
     </div>
 
     <!-- Midtrans Snap JS -->

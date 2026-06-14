@@ -1,4 +1,6 @@
 import flatpickr from "flatpickr";
+import { Indonesian } from "flatpickr/dist/l10n/id.js";
+flatpickr.localize(Indonesian);
 import TomSelect from "tom-select";
 import "./bootstrap";
 import "./../../vendor/power-components/livewire-powergrid/dist/powergrid";

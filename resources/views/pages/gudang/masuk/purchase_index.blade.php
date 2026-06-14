@@ -47,7 +47,7 @@
                                             </ul>
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded">Pending (Menunggu Gudang)</span>
+                                            <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded">Menunggu Persetujuan Gudang</span>
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <form action="{{ route('gudang.masuk.purchase.approve', $item) }}" method="POST" onsubmit="return confirm('Pastikan fisik barang sesuai dengan PO. Terima barang ini ke gudang?');">
@@ -61,7 +61,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-6 py-4 text-center text-muted-foreground">Tidak ada pengiriman barang dari supplier yang pending.</td>
+                                        <td colspan="6" class="px-6 py-4 text-center text-muted-foreground">Tidak ada barang masuk yang menunggu persetujuan.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

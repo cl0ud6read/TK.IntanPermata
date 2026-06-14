@@ -1,12 +1,12 @@
-<x-app-layout title="Customers">
+<x-app-layout title="Pelanggan">
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-foreground leading-tight">
-                {{ __('Customers') }}
+                {{ __('Daftar Pelanggan') }}
             </h2>
             @if(auth()->user()->role === 'admin')<x-primary-button x-data x-on:click="$dispatch('create-customer')">
                 <x-heroicon-o-plus class="w-4 h-4 mr-2" />
-                {{ __('Create Customer') }}
+                {{ __('Tambah Pelanggan') }}
             </x-primary-button>@endif
         </div>
     </x-slot>

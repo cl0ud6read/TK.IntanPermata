@@ -22,7 +22,7 @@ class StorePurchaseRequest extends FormRequest
             'notes' => ['nullable', 'string'],
             // 'status' is handled by controller (default: draft)
             'items' => ['required', 'array', 'min:1'],
-            'items.*.product_id' => ['required', 'exists:products,id'],
+            'items.*.bahan_baku_id' => ['required', 'exists:bahan_bakus,id'],
             'items.*.quantity' => ['required', 'integer', 'min:1'],
             'items.*.unit_price' => ['required', 'numeric', 'min:0'],
             'items.*.selling_price' => ['nullable', 'numeric', 'min:0'],
@@ -33,7 +33,7 @@ class StorePurchaseRequest extends FormRequest
     {
         return [
             'items.required' => 'Please add at least one item.',
-            'items.*.product_id.required' => 'Product is required.',
+            'items.*.bahan_baku_id.required' => 'Bahan Baku is required.',
             'items.*.quantity.min' => 'Quantity must be at least 1.',
         ];
     }

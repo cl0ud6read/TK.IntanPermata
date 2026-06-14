@@ -94,7 +94,7 @@
                 </x-secondary-button>
                 <x-primary-button type="button" x-on:click="$dispatch('close-modal', { name: 'product-detail-modal' }); $dispatch('edit-product', { product: {{ $product->id }} })">
                     <x-heroicon-o-pencil-square class="w-4 h-4 mr-2" />
-                    {{ __('Edit Product') }}
+                    {{ __('Ubah Produk') }}
                 </x-primary-button>
             </div>
         </div>

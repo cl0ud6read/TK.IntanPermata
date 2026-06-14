@@ -46,7 +46,7 @@
                 </x-secondary-button>
                 <x-primary-button type="button" x-on:click="$dispatch('close-modal', { name: 'user-detail-modal' }); $dispatch('edit-user', { user: {{ $user->id }} })">
                     <x-heroicon-o-pencil-square class="w-4 h-4 mr-2" />
-                    {{ __('Edit User') }}
+                    {{ __('Ubah Pengguna') }}
                 </x-primary-button>
             </div>
         </div>

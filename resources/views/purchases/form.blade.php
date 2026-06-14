@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-4 rounded-lg border border-gray-200">
         <!-- Supplier -->
         <div class="space-y-2">
-            <x-input-label for="supplier_id" :value="__('Supplier')" required />
+            <x-input-label for="supplier_id" :value="__('Pemasok')" required />
             <div class="w-full">
                 <select id="supplier_id" name="supplier_id"
                         x-init="initSupplierSelect($el)"
@@ -27,13 +27,13 @@
 
         <!-- Invoice (Optional) -->
         <div class="space-y-2">
-            <x-input-label for="invoice_number" :value="__('Invoice Number (Optional)')" />
+            <x-input-label for="invoice_number" :value="__('Nomor Faktur (Opsional)')" />
             <x-text-input
                 id="invoice_number"
                 type="text"
                 name="invoice_number"
                 :value="old('invoice_number', $purchase->invoice_number ?? '')"
-                placeholder="Leave empty for drafts"
+                placeholder="Kosongkan untuk draf"
                 class="block w-full"
             />
             <x-input-error :messages="$errors->get('invoice_number')" />
@@ -41,7 +41,7 @@
 
         <!-- Proof Image -->
         <div class="space-y-2">
-            <x-input-label for="proof_image" :value="__('Proof of Receipt')" />
+            <x-input-label for="proof_image" :value="__('Bukti Terima')" />
             <input
                 id="proof_image"
                 type="file"
@@ -66,7 +66,7 @@
         <!-- Dates -->
         <div class="grid grid-cols-2 gap-4">
             <div class="space-y-2">
-                <x-input-label for="purchase_date" :value="__('Purchase Date')" required />
+                <x-input-label for="purchase_date" :value="__('Tanggal Pembelian')" required />
                 <x-text-input
                     id="purchase_date"
                     type="date"
@@ -77,7 +77,7 @@
                 <x-input-error :messages="$errors->get('purchase_date')" />
             </div>
             <div class="space-y-2">
-                <x-input-label for="due_date" :value="__('Due Date')" />
+                <x-input-label for="due_date" :value="__('Jatuh Tempo')" />
                 <x-text-input
                     id="due_date"
                     type="date"
@@ -93,19 +93,19 @@
          <div class="space-y-2">
             <x-input-label :value="__('Status')" />
             <div class="flex h-10 w-full items-center rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500">
-                {{ isset($purchase) && $purchase->status ? $purchase->status->label() : 'Draft (Default)' }}
+                {{ isset($purchase) && $purchase->status ? $purchase->status->label() : 'Draf (Default)' }}
             </div>
         </div>
 
         <!-- Notes -->
         <div class="md:col-span-2 space-y-2">
-            <x-input-label for="notes" :value="__('Notes')" />
+            <x-input-label for="notes" :value="__('Catatan')" />
             <textarea
                 id="notes"
                 name="notes"
                 rows="2"
                 class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                placeholder="Additional notes..."
+                placeholder="Catatan tambahan..."
             >{{ old('notes', $purchase->notes ?? '') }}</textarea>
             <x-input-error :messages="$errors->get('notes')" />
         </div>
@@ -118,7 +118,7 @@
              <select
                 id="master_product_search"
                 x-init="initMasterSearch($el)"
-                placeholder="Search Product to Add..."
+                placeholder="Cari Bahan Baku untuk Ditambahkan..."
                 autocomplete="off"
             ></select>
         </div>
@@ -129,12 +129,12 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50 sticky top-0 z-10">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Buy Price</th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Sell Price</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Produk</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Jml</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Beli</th>
+                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Harga Jual</th>
                             <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -144,9 +144,9 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm font-medium text-gray-900" x-text="item.product_name"></div>
                                     <div class="text-xs text-gray-500" x-text="item.product_code || 'ID: ' + item.product_id"></div>
-                                    <input type="hidden" :name="`items[${index}][product_name]`" :value="item.product_name">
-                                    <input type="hidden" :name="`items[${index}][product_id]`" :value="item.product_id">
-                                    <input type="hidden" :name="`items[${index}][product_code]`" :value="item.product_code">
+                                    <input type="hidden" :name="`items[${index}][bahan_baku_name]`" :value="item.product_name">
+                                    <input type="hidden" :name="`items[${index}][bahan_baku_id]`" :value="item.product_id">
+                                    <input type="hidden" :name="`items[${index}][bahan_baku_code]`" :value="item.product_code">
                                 </td>
 
                                 <!-- Qty -->
@@ -289,7 +289,7 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3 h-3 mr-1">
                                                 <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
                                             </svg>
-                                            Low margin
+                                            Margin rendah
                                         </div>
                                     </template>
                                 </td>
@@ -312,8 +312,8 @@
                                 <td colspan="6" class="px-6 py-20 text-center text-gray-500">
                                     <div class="flex flex-col items-center justify-center">
                                         <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                        <p class="text-base font-medium">No items added</p>
-                                        <p class="text-sm text-gray-400">Search products above to add to purchase list</p>
+                                        <p class="text-base font-medium">Belum ada item</p>
+                                        <p class="text-sm text-gray-400">Cari produk di atas untuk ditambahkan ke daftar</p>
                                     </div>
                                 </td>
                             </tr>
@@ -321,7 +321,7 @@
                     </tbody>
                     <tfoot class="bg-gray-50 border-t border-gray-200">
                         <tr>
-                            <td colspan="4" class="px-6 py-4 text-right font-bold text-gray-900 text-base">Total Purchase:</td>
+                            <td colspan="4" class="px-6 py-4 text-right font-bold text-gray-900 text-base">Total Pembelian:</td>
                             <td class="px-6 py-4 text-right font-bold text-blue-600 text-lg">
                                 <span x-text="window.formatMoney(total)"></span>
                             </td>
@@ -336,7 +336,7 @@
     <!-- Actions -->
     <div class="flex items-center justify-end gap-x-4 pt-6 border-t border-gray-200">
         <a href="{{ route('purchases.index') }}" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-            {{ __('Cancel') }}
+            {{ __('Batal') }}
         </a>
 
         <x-primary-button class="flex items-center gap-2" ::disabled="loading">
@@ -344,7 +344,7 @@
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <span x-text="loading ? 'Processing...' : ({{ isset($purchase->id) ? '`Update Purchase`' : '`Create Purchase`' }})"></span>
+            <span x-text="loading ? 'Memproses...' : ({{ isset($purchase->id) ? '`Simpan Perubahan`' : '`Buat Pembelian`' }})"></span>
         </x-primary-button>
     </div>
 </div>
@@ -417,7 +417,7 @@
                 let self = this;
                 this.waitForTomSelect(() => {
                     new TomSelect(el, {
-                        placeholder: 'Select Supplier...',
+                        placeholder: 'Pilih Pemasok...',
                         preload: 'focus',
                         valueField: 'value',
                         labelField: 'text',
@@ -457,7 +457,7 @@
 
                     window.dispatchEvent(new CustomEvent('toast', {
                         detail: {
-                            message: 'Product already exists. Quantity updated.',
+                            message: 'Produk sudah ada. Jumlah diperbarui.',
                             type: 'info'
                         }
                     }));
@@ -475,7 +475,7 @@
 
                     window.dispatchEvent(new CustomEvent('toast', {
                         detail: {
-                            message: 'Product "' + product.text + '" added to list.',
+                            message: 'Produk "' + product.text + '" ditambahkan ke daftar.',
                             type: 'success'
                         }
                     }));
@@ -486,7 +486,7 @@
                 let self = this;
                 this.waitForTomSelect(() => {
                     let ts = new TomSelect(el, {
-                        placeholder: 'Search Product to Add...',
+                        placeholder: 'Cari Bahan Baku untuk Ditambahkan...',
                         preload: 'focus',
                         valueField: 'value',
                         labelField: 'text',
@@ -494,7 +494,7 @@
                         closeAfterSelect: false,
                         openOnFocus: true,
                         load: function(query, callback) {
-                            var url = '{{ route("ajax.products.search") }}';
+                            var url = '{{ route("ajax.bahan-bakus.search") }}';
 
                             fetch(url, {
                                 method: 'POST',

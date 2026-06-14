@@ -51,18 +51,18 @@ class PurchaseController extends Controller
             $purchase = $this->service->createPurchase($purchaseData, Auth::id());
 
             return redirect()->route('purchases.show', $purchase)
-                ->with('success', 'Purchase created successfully.');
+                ->with('success', 'Pembelian berhasil dibuat.');
 
         } catch (PurchaseException $e) {
             return back()->withInput()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->withInput()->with('error', 'Error creating purchase: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Gagal membuat pembelian: ' . $e->getMessage());
         }
     }
 
     public function show(Purchase $purchase)
     {
-        $purchase->load(['supplier', 'creator', 'items.product.unit']);
+        $purchase->load(['supplier', 'creator', 'items.bahanBaku.unit']);
         return view('purchases.show', compact('purchase'));
     }
 
@@ -73,7 +73,7 @@ class PurchaseController extends Controller
         }
 
         // Load relationships needed for the form
-        $purchase->load('items.product', 'supplier');
+        $purchase->load('items.bahanBaku', 'supplier');
 
         return view('purchases.edit', [
             'purchase' => $purchase,
@@ -98,12 +98,12 @@ class PurchaseController extends Controller
             $this->service->updatePurchase($purchase, $purchaseData);
 
             return redirect()->route('purchases.show', $purchase)
-                ->with('success', 'Purchase updated successfully.');
+                ->with('success', 'Data pembelian berhasil diperbarui.');
 
         } catch (PurchaseException $e) {
             return back()->withInput()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->withInput()->with('error', 'Error updating purchase: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Gagal memperbarui pembelian: ' . $e->getMessage());
         }
     }
 
@@ -111,11 +111,11 @@ class PurchaseController extends Controller
     {
         try {
             $this->service->deletePurchase($purchase);
-            return redirect()->route('purchases.index')->with('success', 'Purchase deleted successfully.');
+            return redirect()->route('purchases.index')->with('success', 'Pembelian berhasil dihapus.');
         } catch (PurchaseException $e) {
             return back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->with('error', 'Error deleting purchase: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menghapus pembelian: ' . $e->getMessage());
         }
     }
 
@@ -123,11 +123,11 @@ class PurchaseController extends Controller
     {
         try {
             $this->service->markAsOrdered($purchase);
-            return back()->with('success', 'Purchase marked as ordered.');
+            return back()->with('success', 'Pembelian ditandai sebagai dipesan.');
         } catch (PurchaseException $e) {
             return back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->with('error', 'Error marking as ordered: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menandai pesanan: ' . $e->getMessage());
         }
     }
 
@@ -165,12 +165,12 @@ class PurchaseController extends Controller
 
             $this->service->markAsReceived($purchase);
 
-            return back()->with('success', 'Purchase received and stock updated.');
+            return back()->with('success', 'Barang diterima dan stok telah diperbarui.');
 
         } catch (PurchaseException $e) {
             return back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->with('error', 'Error receiving purchase: ' . $e->getMessage());
+            return back()->with('error', 'Gagal memproses penerimaan: ' . $e->getMessage());
         }
     }
 
@@ -178,11 +178,11 @@ class PurchaseController extends Controller
     {
         try {
             $this->service->cancelPurchase($purchase);
-            return back()->with('success', 'Purchase order cancelled.');
+            return back()->with('success', 'Pesanan pembelian berhasil dibatalkan.');
         } catch (PurchaseException $e) {
             return back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->with('error', 'Error cancelling purchase: ' . $e->getMessage());
+            return back()->with('error', 'Gagal membatalkan pesanan: ' . $e->getMessage());
         }
     }
 
@@ -190,11 +190,11 @@ class PurchaseController extends Controller
     {
         try {
             $this->service->markAsPaid($purchase);
-            return back()->with('success', 'Purchase marked as paid.');
+            return back()->with('success', 'Pembelian ditandai Lunas (Dibayar).');
         } catch (PurchaseException $e) {
             return back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->with('error', 'Error marking as paid: ' . $e->getMessage());
+            return back()->with('error', 'Gagal menandai pembayaran: ' . $e->getMessage());
         }
     }
 
@@ -202,11 +202,11 @@ class PurchaseController extends Controller
     {
         try {
             $this->service->restoreToDraft($purchase);
-            return back()->with('success', 'Purchase restored to draft.');
+            return back()->with('success', 'Pembelian dikembalikan ke status draf.');
         } catch (PurchaseException $e) {
             return back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            return back()->with('error', 'Error restoring purchase: ' . $e->getMessage());
+            return back()->with('error', 'Gagal mengembalikan status pembelian: ' . $e->getMessage());
         }
     }
 }

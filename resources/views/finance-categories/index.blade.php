@@ -1,13 +1,15 @@
-<x-app-layout title="Finance Categories">
+<x-app-layout title="Kategori Keuangan">
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-foreground leading-tight">
-                {{ __('Finance Categories') }}
+                {{ __('Kategori Keuangan') }}
             </h2>
+            @if(auth()->user()->role === 'admin')
             <x-primary-button x-data x-on:click="$dispatch('create-finance-category')">
                 <x-heroicon-o-plus class="w-4 h-4 mr-2" />
-                {{ __('Create Category') }}
+                {{ __('Tambah Kategori') }}
             </x-primary-button>
+            @endif
         </div>
     </x-slot>
 

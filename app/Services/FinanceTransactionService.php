@@ -20,7 +20,7 @@ class FinanceTransactionService
      */
     public function recordIncomeFromSale(Sale $sale): void
     {
-        $category = $this->getOrCreateCategory('Product Sales', FinanceCategoryType::Income);
+        $category = $this->getOrCreateCategory('Penjualan Produk', FinanceCategoryType::Income);
 
         FinanceTransaction::updateOrCreate(
             [
@@ -44,7 +44,7 @@ class FinanceTransactionService
      */
     public function recordExpenseFromPurchase(Purchase $purchase): void
     {
-        $category = $this->getOrCreateCategory('Product Purchases', FinanceCategoryType::Expense);
+        $category = $this->getOrCreateCategory('Pembelian Stok', FinanceCategoryType::Expense);
 
         FinanceTransaction::updateOrCreate(
             [
@@ -129,8 +129,8 @@ class FinanceTransactionService
             throw new FinanceTransactionException('Cannot delete system-generated transaction (Sales/Purchases). Please void the source instead.');
         }
 
-        if ($transaction->category && in_array($transaction->category->name, ['Product Sales', 'Product Purchases'])) {
-            throw new FinanceTransactionException('Cannot delete transactions belonging to protected categories (Product Sales/Product Purchases).');
+        if ($transaction->category && in_array($transaction->category->name, ['Penjualan Produk', 'Pembelian Stok'])) {
+            throw new FinanceTransactionException('Cannot delete transactions belonging to protected categories (Penjualan Produk/Pembelian Stok).');
         }
 
         try {

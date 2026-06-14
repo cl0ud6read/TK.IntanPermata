@@ -2,15 +2,15 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-foreground leading-tight">
-                {{ __('Purchase Details') }} #{{ $purchase->invoice_number ?: $purchase->id }}
+                {{ __('Detail Pembelian') }} #{{ $purchase->invoice_number ?: $purchase->id }}
             </h2>
             <div class="flex items-center gap-2">
                 <x-secondary-button href="{{ route('purchases.index') }}">
-                    &larr; {{ __('Back to List') }}
+                    &larr; {{ __('Kembali ke Daftar') }}
                 </x-secondary-button>
                 @if(in_array($purchase->status, [\App\Enums\PurchaseStatus::DRAFT, \App\Enums\PurchaseStatus::ORDERED]))
                     <x-secondary-button href="{{ route('purchases.edit', $purchase) }}">
-                        {{ __('Edit') }}
+                        {{ __('Ubah') }}
                     </x-secondary-button>
                 @endif
             </div>
@@ -25,8 +25,8 @@
                     <!-- Header Info -->
                     <div class="flex items-start justify-between border-b border-gray-100 pb-4 mb-6">
                         <div>
-                            <h3 class="text-lg font-medium text-gray-900">{{ __('Purchase Information') }}</h3>
-                            <p class="text-sm text-gray-500">{{ __('Details of the purchase transaction') }}</p>
+                            <h3 class="text-lg font-medium text-gray-900">{{ __('Informasi Pembelian') }}</h3>
+                            <p class="text-sm text-gray-500">{{ __('Rincian transaksi pembelian') }}</p>
                         </div>
                         <div class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-xs font-medium border border-slate-200">
                             ID: #{{ $purchase->id }}
@@ -36,22 +36,22 @@
                     <!-- Content Grid -->
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                         <!-- Supplier -->
-                        <x-detail-item label="Supplier" :value="$purchase->supplier->name">
+                        <x-detail-item label="Pemasok" :value="$purchase->supplier->name">
                             <x-heroicon-o-building-storefront class="w-4 h-4 text-gray-400" />
                         </x-detail-item>
 
                         <!-- Invoice -->
-                        <x-detail-item label="Invoice Number" :value="$purchase->invoice_number ?? '-'">
+                        <x-detail-item label="Nomor Faktur" :value="$purchase->invoice_number ?? '-'">
                             <x-heroicon-o-document-text class="w-4 h-4 text-gray-400" />
                         </x-detail-item>
 
                         <!-- Purchase Date -->
-                        <x-detail-item label="Purchase Date" :value="$purchase->purchase_date->format('d M Y')">
+                        <x-detail-item label="Tanggal Pembelian" :value="$purchase->purchase_date->format('d M Y')">
                             <x-heroicon-o-calendar class="w-4 h-4 text-gray-400" />
                         </x-detail-item>
 
                         <!-- Due Date -->
-                        <x-detail-item label="Due Date" :value="$purchase->due_date ? $purchase->due_date->format('d M Y') : '-'">
+                        <x-detail-item label="Jatuh Tempo" :value="$purchase->due_date ? $purchase->due_date->format('d M Y') : '-'">
                             <x-heroicon-o-calendar class="w-4 h-4 text-gray-400" />
                         </x-detail-item>
 
@@ -66,28 +66,28 @@
                         </div>
 
                         <!-- Total Amount -->
-                        <x-detail-item label="Total Amount" :value="format_money($purchase->total)">
+                        <x-detail-item label="Total Nominal" :value="format_money($purchase->total)">
                             <x-heroicon-o-banknotes class="w-4 h-4 text-gray-400" />
                         </x-detail-item>
 
                         <!-- Created By -->
-                        <x-detail-item label="Created By" :value="$purchase->creator->name ?? 'Unknown'">
+                        <x-detail-item label="Dibuat Oleh" :value="$purchase->creator->name ?? 'Tidak diketahui'">
                             <x-heroicon-o-user class="w-4 h-4 text-gray-400" />
                         </x-detail-item>
 
                         <!-- Proof Image -->
                         @if($purchase->proof_image)
                             <div>
-                                <label class="text-sm font-medium leading-none text-gray-500">Proof of Receipt</label>
+                                <label class="text-sm font-medium leading-none text-gray-500">Bukti Terima</label>
                                 <div class="mt-1">
                                     <a href="{{ Storage::url($purchase->proof_image) }}" target="_blank" class="text-indigo-600 hover:underline text-sm flex items-center gap-1">
                                         <x-heroicon-o-paper-clip class="w-4 h-4" />
-                                        View Image
+                                        Lihat Gambar
                                     </a>
                                 </div>
                             </div>
                         @else
-                            <x-detail-item label="Proof of Receipt" value="-" />
+                            <x-detail-item label="Bukti Terima" value="-" />
                         @endif
                     </div>
 
@@ -98,7 +98,7 @@
                                 Notes
                             </label>
                             <div class="bg-gray-50 p-3 rounded-md border border-gray-100">
-                                <p class="text-sm text-slate-700 italic leading-relaxed">{{ $purchase->notes ?: 'No additional notes.' }}</p>
+                                <p class="text-sm text-slate-700 italic leading-relaxed">{{ $purchase->notes ?: 'Tidak ada catatan tambahan.' }}</p>
                             </div>
                         </div>
                     </div>
@@ -108,12 +108,12 @@
                         <table class="w-full text-sm text-left">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                                 <tr>
-                                    <th class="px-6 py-3">Code</th>
-                                    <th class="px-6 py-3">Product</th>
-                                    <th class="px-6 py-3">Unit</th>
-                                    <th class="px-6 py-3 text-center">Quantity</th>
-                                    <th class="px-6 py-3 text-right">Buying Price</th>
-                                    <th class="px-6 py-3 text-right">Selling Price</th>
+                                    <th class="px-6 py-3">Kode</th>
+                                    <th class="px-6 py-3">Bahan Baku</th>
+                                    <th class="px-6 py-3">Satuan</th>
+                                    <th class="px-6 py-3 text-center">Jumlah</th>
+                                    <th class="px-6 py-3 text-right">Harga Beli</th>
+                                    <th class="px-6 py-3 text-right">Harga Jual</th>
                                     <th class="px-6 py-3 text-right">Subtotal</th>
                                 </tr>
                             </thead>
@@ -121,13 +121,13 @@
                                 @foreach($purchase->items as $item)
                                     <tr class="bg-white hover:bg-gray-50">
                                         <td class="px-6 py-4 text-sm text-gray-500">
-                                            {{ $item->product->product_code ?? $item->product->sku ?? '-' }}
+                                            {{ $item->bahanBaku->product_code ?? $item->bahanBaku->sku ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 font-medium text-gray-900">
-                                            {{ $item->product->name }}
+                                            {{ $item->bahanBaku->name ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
-                                            {{ $item->product->unit->symbol ?? $item->product->unit->name ?? '-' }}
+                                            {{ $item->bahanBaku->unit->symbol ?? $item->bahanBaku->unit->name ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             {{ number_format($item->quantity) }}
@@ -184,18 +184,18 @@
                     {{-- Delete Action --}}
                     <x-danger-button
                         type="button"
-                        @click="confirmAction('{{ route('purchases.destroy', $purchase) }}', 'DELETE', 'Delete Draft', 'Are you sure you want to delete this draft? This action cannot be undone.', 'Delete Draft', '!bg-red-600 hover:!bg-red-700 focus:!ring-red-500')"
+                        @click="confirmAction('{{ route('purchases.destroy', $purchase) }}', 'DELETE', 'Hapus Draf', 'Apakah Anda yakin ingin menghapus draf ini? Tindakan ini tidak dapat dibatalkan.', 'Hapus Draf', '!bg-red-600 hover:!bg-red-700 focus:!ring-red-500')"
                     >
-                        {{ __('Delete Draft') }}
+                        {{ __('Hapus Draf') }}
                     </x-danger-button>
 
                     {{-- Order Action --}}
                     <x-primary-button
                         type="button"
                         class="!bg-sky-600 hover:!bg-sky-700 focus:!ring-sky-500"
-                        @click="confirmAction('{{ route('purchases.mark-ordered', $purchase) }}', 'PATCH', 'Mark as Ordered', 'Are you sure you want to mark this purchase as ordered? The stock will not be updated until items are received.', 'Mark as Ordered', '!bg-sky-600 hover:!bg-sky-700 focus:!ring-sky-500')"
+                        @click="confirmAction('{{ route('purchases.mark-ordered', $purchase) }}', 'PATCH', 'Tandai Dipesan', 'Apakah Anda yakin ingin menandai pesanan? Stok tidak bertambah hingga barang diterima.', 'Tandai Dipesan', '!bg-sky-600 hover:!bg-sky-700 focus:!ring-sky-500')"
                     >
-                        {{ __('Mark as Ordered') }}
+                        {{ __('Tandai Dipesan') }}
                     </x-primary-button>
 
                 @elseif($purchase->status === \App\Enums\PurchaseStatus::ORDERED)
@@ -204,16 +204,16 @@
                     <x-secondary-button
                         type="button"
                         class="text-red-600 hover:bg-red-50 border-red-200"
-                        @click="confirmAction('{{ route('purchases.cancel', $purchase) }}', 'PATCH', 'Cancel Order', 'Are you sure you want to cancel this order?', 'Cancel Order', '!bg-red-600 hover:!bg-red-700 focus:!ring-red-500')"
+                        @click="confirmAction('{{ route('purchases.cancel', $purchase) }}', 'PATCH', 'Batalkan Pesanan', 'Apakah Anda yakin ingin membatalkan pesanan ini?', 'Batalkan Pesanan', '!bg-red-600 hover:!bg-red-700 focus:!ring-red-500')"
                     >
-                        {{ __('Cancel Order') }}
+                        {{ __('Batalkan Pesanan') }}
                     </x-secondary-button>
 
                     {{-- Receive Action Trigger (Modal) --}}
                     <div x-data="{ open: @if($errors->has('invoice_number') || $errors->has('proof_image')) true @else false @endif }">
                         <x-primary-button @click="open = true" class="!bg-green-600 hover:!bg-green-700 focus:!ring-green-500">
                             <x-heroicon-o-check-circle class="w-5 h-5 mr-1" />
-                            {{ __('Receive Items') }}
+                            {{ __('Terima Barang') }}
                         </x-primary-button>
 
                         <!-- Modal Backdrop -->
@@ -228,7 +228,7 @@
                                  class="relative bg-white rounded-lg max-w-md w-full p-6 shadow-xl">
 
                                 <h3 class="text-lg font-medium text-gray-900 mb-4">
-                                    Receive Purchase #{{ $purchase->invoice_number ?? $purchase->id }}
+                                    Terima Pembelian #{{ $purchase->invoice_number ?? $purchase->id }}
                                 </h3>
 
                                 <form
@@ -250,7 +250,7 @@
                                             </div>
                                         @else
                                             <div class="space-y-2">
-                                                <x-input-label for="invoice_number" :value="__('Final Invoice Number')" required />
+                                                <x-input-label for="invoice_number" :value="__('Nomor Faktur Final')" required />
                                                 <x-text-input
                                                     id="invoice_number"
                                                     name="invoice_number"
@@ -268,12 +268,12 @@
                                                 <span class="block text-xs font-medium text-gray-500 uppercase mb-1">Proof of Receipt</span>
                                                 <a href="{{ Storage::url($purchase->proof_image) }}" target="_blank" class="text-indigo-600 hover:underline text-sm flex items-center gap-1">
                                                     <x-heroicon-o-paper-clip class="w-4 h-4" />
-                                                    View Uploaded Image
+                                                    Lihat Gambar Terunggah
                                                 </a>
                                             </div>
                                         @else
                                             <div class="space-y-2">
-                                                <x-input-label for="proof_image" :value="__('Upload Proof of Receipt')" required />
+                                                <x-input-label for="proof_image" :value="__('Unggah Bukti Terima')" required />
                                                 <input
                                                     id="proof_image"
                                                     type="file"
@@ -287,7 +287,7 @@
                                                         file:bg-indigo-50 file:text-indigo-700
                                                         hover:file:bg-indigo-100"
                                                 />
-                                                <p class="text-xs text-gray-500">Image (JPG, PNG) max 2MB.</p>
+                                                <p class="text-xs text-gray-500">Gambar (JPG, PNG) maks 2MB.</p>
                                                 <x-input-error :messages="$errors->get('proof_image')" class="mt-2" />
                                             </div>
                                         @endif
@@ -295,14 +295,14 @@
                                         @if($purchase->invoice_number && $purchase->proof_image)
                                             <p class="text-xs text-green-600 mt-3 font-medium flex items-center">
                                                 <x-heroicon-o-check-circle class="w-4 h-4 mr-1" />
-                                                Data complete. Ready to receive.
+                                                Data lengkap. Siap diterima.
                                             </p>
                                         @endif
                                     </div>
 
                                     <div class="mt-6 flex justify-end gap-3">
                                         <x-secondary-button type="button" @click="open = false" x-bind:disabled="submitting">
-                                            Cancel
+                                            Batal
                                         </x-secondary-button>
                                         <x-primary-button
                                             class="!bg-green-600 hover:!bg-green-700 focus:!ring-green-500"
@@ -313,7 +313,7 @@
                                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            {{ __('Confirm Receipt') }}
+                                            {{ __('Konfirmasi Terima') }}
                                         </x-primary-button>
                                     </div>
                                 </form>
@@ -327,10 +327,10 @@
                     <x-primary-button
                         type="button"
                         class="!bg-emerald-600 hover:!bg-emerald-700 focus:!ring-emerald-500"
-                        @click="confirmAction('{{ route('purchases.mark-paid', $purchase) }}', 'PATCH', 'Mark as Paid', 'Are you sure you want to mark this purchase as paid? This assumes the full amount has been paid.', 'Mark as Paid', '!bg-emerald-600 hover:!bg-emerald-700 focus:!ring-emerald-500')"
+                        @click="confirmAction('{{ route('purchases.mark-paid', $purchase) }}', 'PATCH', 'Tandai Dibayar', 'Apakah Anda yakin ingin menandai pembelian ini sebagai dibayar? (Lunas)', 'Tandai Dibayar', '!bg-emerald-600 hover:!bg-emerald-700 focus:!ring-emerald-500')"
                     >
                         <x-heroicon-o-currency-dollar class="w-5 h-5 mr-1" />
-                        {{ __('Mark as Paid') }}
+                        {{ __('Tandai Dibayar') }}
                     </x-primary-button>
 
                 @elseif($purchase->status === \App\Enums\PurchaseStatus::CANCELLED)
@@ -338,9 +338,9 @@
                     {{-- Restore Action --}}
                     <x-secondary-button
                         type="button"
-                        @click="confirmAction('{{ route('purchases.restore-draft', $purchase) }}', 'PATCH', 'Restore to Draft', 'Restore this purchase to Draft status? You can edit it again.', 'Restore to Draft', '!bg-gray-800 hover:!bg-gray-700 text-white')"
+                        @click="confirmAction('{{ route('purchases.restore-draft', $purchase) }}', 'PATCH', 'Kembalikan ke Draf', 'Kembalikan pembelian ini ke status Draf? Anda dapat mengubahnya kembali.', 'Kembalikan ke Draf', '!bg-gray-800 hover:!bg-gray-700 text-white')"
                     >
-                        {{ __('Restore to Draft') }}
+                        {{ __('Kembalikan ke Draf') }}
                     </x-secondary-button>
 
                 @endif
@@ -354,7 +354,7 @@
 
                         <div class="mt-6 flex justify-end">
                             <x-secondary-button x-on:click="$dispatch('close-modal', { name: 'confirmation-modal' })" x-bind:disabled="submitting">
-                                {{ __('Cancel') }}
+                                {{ __('Batal') }}
                             </x-secondary-button>
 
                             <form id="confirmation-form" method="POST" class="ml-3" x-ref="confirmForm" @submit.prevent>

@@ -1,11 +1,11 @@
-<x-app-layout title="Edit Purchase">
+<x-app-layout title="Ubah Pembelian">
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-foreground leading-tight">
-                {{ __('Edit Purchase') }} #{{ $purchase->id }}
+                {{ __('Ubah Pembelian') }} #{{ $purchase->id }}
             </h2>
             <x-secondary-button href="{{ route('purchases.index') }}">
-                &larr; {{ __('Back to List') }}
+                &larr; {{ __('Kembali ke Daftar') }}
             </x-secondary-button>
         </div>
     </x-slot>
@@ -16,14 +16,14 @@
                     x-data="purchaseForm({
                         items: {{ Js::from(old('items', $purchase->items->map(function($item) {
                             return [
-                                'product_id' => $item->product_id,
+                                'product_id' => $item->bahan_baku_id,
                                 'quantity' => $item->quantity,
                                 'unit_price' => $item->unit_price,
                                 'selling_price' => $item->selling_price,
                                 'subtotal' => $item->subtotal,
                                 'key' => Str::random(10),
-                                'product_name' => $item->product->name ?? '',
-                                'product_code' => $item->product->sku ?? ''
+                                'product_name' => $item->bahanBaku->name ?? '',
+                                'product_code' => $item->bahanBaku->sku ?? ''
                             ];
                         }))) }},
                         supplier_id: {{ Js::from(old('supplier_id', $purchase->supplier_id)) }},

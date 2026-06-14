@@ -18,6 +18,14 @@ class Dashboard extends Component
     public array $recentSales = [];
     public array $topProducts = [];
     public array $topCustomers = [];
+    public int $produksiTertunda = 0;
+    public int $produksiBerjalan = 0;
+    public int $produksiSelesai = 0;
+    
+    public int $totalStokProduk = 0;
+    public int $totalStokBahan = 0;
+    public int $stokMasuk = 0;
+    public int $stokKeluar = 0;
 
     // Charts Data
     public array $salesChart = [];
@@ -72,6 +80,20 @@ class Dashboard extends Component
         $this->topProducts = $service->getTopProducts($startDate, $endDate, 5);
         $this->recentSales = $service->getRecentSales(5);
         $this->topCustomers = $service->getTopCustomers($startDate, $endDate, 5);
+
+        // Production Stats
+        $this->produksiTertunda = \App\Models\Produksi::where('status', 'pending')->count();
+        $this->produksiBerjalan = \App\Models\Produksi::where('status', 'processing')->count();
+        $this->produksiSelesai = \App\Models\Produksi::where('status', 'completed')
+            ->whereBetween('updated_at', [$startDate, $endDate])->count();
+
+        // Warehouse Stats
+        $this->totalStokProduk = \App\Models\Product::sum('quantity') ?? 0;
+        $this->totalStokBahan = \App\Models\BahanBaku::sum('quantity') ?? 0;
+        $this->stokMasuk = \App\Models\StockMovement::where('type', 'in')
+            ->whereBetween('movement_date', [$startDate, $endDate])->sum('quantity') ?? 0;
+        $this->stokKeluar = \App\Models\StockMovement::where('type', 'out')
+            ->whereBetween('movement_date', [$startDate, $endDate])->sum('quantity') ?? 0;
 
         // 4. Prepare Chart Data
         $salesTrend = $service->getSalesTrend($startDate, $endDate);

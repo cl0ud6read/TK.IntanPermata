@@ -117,7 +117,7 @@ final class FinanceCategoryTable extends PowerGridComponent
         ];
 
         // Protect System Categories
-        $systemCategories = ['Product Sales', 'Product Purchases'];
+        $systemCategories = ['Penjualan Produk', 'Pembelian Stok'];
 
         if (!in_array($row->name, $systemCategories)) {
             $actions[] = Button::add('edit')
@@ -150,7 +150,7 @@ final class FinanceCategoryTable extends PowerGridComponent
 
         if ($category) {
             // Protect System Categories
-            if (in_array($category->name, ['Product Sales', 'Product Purchases'])) {
+            if (in_array($category->name, ['Penjualan Produk', 'Pembelian Stok'])) {
                 $this->dispatch('toast', ['message' => 'System categories cannot be deleted.', 'type' => 'error']);
                 return;
             }

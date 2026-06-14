@@ -96,7 +96,7 @@
                 @if(!$transaction->reference_type)
                     <x-primary-button type="button" x-on:click="$dispatch('close-modal', { name: 'finance-transaction-detail-modal' }); $dispatch('edit-finance-transaction', { transaction: {{ $transaction->id }} })">
                         <x-heroicon-o-pencil-square class="w-4 h-4 mr-2" />
-                        {{ __('Edit Transaction') }}
+                        {{ __('Ubah Transaksi') }}
                     </x-primary-button>
                 @endif
             </div>

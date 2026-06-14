@@ -1,12 +1,12 @@
-<x-app-layout title="Units">
+<x-app-layout title="Satuan">
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-foreground leading-tight">
-                {{ __('Units') }}
+                {{ __('Daftar Satuan') }}
             </h2>
             @if(auth()->user()->role === 'admin')<x-primary-button x-data x-on:click="$dispatch('create-unit')">
                 <x-heroicon-o-plus class="w-4 h-4 mr-2" />
-                {{ __('Create Unit') }}
+                {{ __('Tambah Satuan') }}
             </x-primary-button>@endif
         </div>
     </x-slot>

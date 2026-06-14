@@ -1,0 +1,62 @@
+<?php
+$replacements = [
+    "__('Purchase Details')" => "__('Detail Pembelian')",
+    "__('Back to List')" => "__('Kembali ke Daftar')",
+    "__('Edit')" => "__('Ubah')",
+    "__('Purchase Information')" => "__('Informasi Pembelian')",
+    "__('Details of the purchase transaction')" => "__('Rincian transaksi pembelian')",
+    "label=\"Supplier\"" => "label=\"Pemasok\"",
+    "label=\"Invoice Number\"" => "label=\"Nomor Faktur\"",
+    "label=\"Purchase Date\"" => "label=\"Tanggal Pembelian\"",
+    "label=\"Due Date\"" => "label=\"Jatuh Tempo\"",
+    ">Status<" => ">Status<",
+    "label=\"Total Amount\"" => "label=\"Total Nominal\"",
+    "label=\"Created By\"" => "label=\"Dibuat Oleh\"",
+    "'Unknown'" => "'Tidak diketahui'",
+    "label=\"Proof of Receipt\"" => "label=\"Bukti Terima\"",
+    "Proof of Receipt</label>" => "Bukti Terima</label>",
+    "View Image" => "Lihat Gambar",
+    "Notes</label>" => "Catatan</label>",
+    "'No additional notes.'" => "'Tidak ada catatan tambahan.'",
+    "Code</th>" => "Kode</th>",
+    "Product</th>" => "Bahan Baku</th>",
+    "Unit</th>" => "Satuan</th>",
+    "Quantity</th>" => "Jumlah</th>",
+    "Buying Price</th>" => "Harga Beli</th>",
+    "Selling Price</th>" => "Harga Jual</th>",
+    "Subtotal</th>" => "Subtotal</th>",
+    "Total</td>" => "Total</td>",
+    "__('Delete Draft')" => "__('Hapus Draf')",
+    "'Delete Draft'" => "'Hapus Draf'",
+    "'Are you sure you want to delete this draft? This action cannot be undone.'" => "'Apakah Anda yakin ingin menghapus draf ini? Tindakan ini tidak dapat dibatalkan.'",
+    "__('Mark as Ordered')" => "__('Tandai Dipesan')",
+    "'Mark as Ordered'" => "'Tandai Dipesan'",
+    "'Are you sure you want to mark this purchase as ordered? The stock will not be updated until items are received.'" => "'Apakah Anda yakin ingin menandai pesanan? Stok tidak bertambah hingga barang diterima.'",
+    "__('Cancel Order')" => "__('Batalkan Pesanan')",
+    "'Cancel Order'" => "'Batalkan Pesanan'",
+    "'Are you sure you want to cancel this order?'" => "'Apakah Anda yakin ingin membatalkan pesanan ini?'",
+    "__('Receive Items')" => "__('Terima Barang')",
+    "Receive Purchase #" => "Terima Pembelian #",
+    "__('Final Invoice Number')" => "__('Nomor Faktur Final')",
+    "__('Upload Proof of Receipt')" => "__('Unggah Bukti Terima')",
+    "Image (JPG, PNG) max 2MB." => "Gambar (JPG, PNG) maks 2MB.",
+    "View Uploaded Image" => "Lihat Gambar Terunggah",
+    "Data complete. Ready to receive." => "Data lengkap. Siap diterima.",
+    "Cancel\n" => "Batal\n",
+    "__('Cancel')" => "__('Batal')",
+    "__('Confirm Receipt')" => "__('Konfirmasi Terima')",
+    "__('Mark as Paid')" => "__('Tandai Dibayar')",
+    "'Mark as Paid'" => "'Tandai Dibayar'",
+    "'Are you sure you want to mark this purchase as paid? This assumes the full amount has been paid.'" => "'Apakah Anda yakin ingin menandai pembelian ini sebagai dibayar? (Lunas)'",
+    "__('Restore to Draft')" => "__('Kembalikan ke Draf')",
+    "'Restore to Draft'" => "'Kembalikan ke Draf'",
+    "'Restore this purchase to Draft status? You can edit it again.'" => "'Kembalikan pembelian ini ke status Draf? Anda dapat mengubahnya kembali.'",
+];
+
+$file = 'c:\laravel10\inventory-management-system-main\resources\views\purchases\show.blade.php';
+$content = file_get_contents($file);
+foreach ($replacements as $search => $replace) {
+    $content = str_replace($search, $replace, $content);
+}
+file_put_contents($file, $content);
+echo "Translated Purchase Show UI.\n";

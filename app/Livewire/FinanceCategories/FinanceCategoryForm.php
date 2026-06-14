@@ -66,7 +66,7 @@ class FinanceCategoryForm extends Component
         abort_if(auth()->user()->role !== 'admin', 403, 'Unauthorized action.');
         $this->validate();
 
-        if ($this->isEditing && $this->category && in_array($this->category->name, ['Product Sales', 'Product Purchases'])) {
+        if ($this->isEditing && $this->category && in_array($this->category->name, ['Penjualan Produk', 'Pembelian Stok'])) {
             $this->dispatch('toast', ['message' => 'System categories cannot be edited.', 'type' => 'error']);
             return;
         }
@@ -83,10 +83,10 @@ class FinanceCategoryForm extends Component
         try {
             if ($this->isEditing && $this->category) {
                 $service->updateCategory($this->category, $data);
-                $message = 'Finance Category updated successfully.';
+                $message = 'Kategori Keuangan berhasil diperbarui.';
             } else {
                 $service->createCategory($data);
-                $message = 'Finance Category created successfully.';
+                $message = 'Kategori Keuangan berhasil dibuat.';
             }
 
             $this->dispatch('close-modal', name: 'finance-category-form-modal');

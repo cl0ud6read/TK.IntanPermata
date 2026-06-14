@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, $role = null)
     {
+        if ($role && $role !== auth()->user()->role) {
+            abort(403, 'Unauthorized. URL role does not match your role.');
+        }
+
         $startDate = $request->input('start_date', now()->subDays(30)->toDateString());
         $endDate = $request->input('end_date', now()->toDateString());
 

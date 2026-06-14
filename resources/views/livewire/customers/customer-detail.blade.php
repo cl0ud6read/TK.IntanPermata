@@ -63,7 +63,7 @@
                 </x-secondary-button>
                 <x-primary-button type="button" x-on:click="$dispatch('close-modal', { name: 'customer-detail-modal' }); $dispatch('edit-customer', { customer: {{ $customer->id }} })" class="bg-amber-500 hover:bg-amber-600 focus:ring-amber-500">
                     <x-heroicon-o-pencil-square class="w-4 h-4 mr-2" />
-                    {{ __('Edit Customer') }}
+                    {{ __('Ubah Pelanggan') }}
                 </x-primary-button>
             </div>
         </div>

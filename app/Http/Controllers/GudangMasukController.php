@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Purchase;
 use App\Models\HasilProduksi;
 use App\Services\StockService;
+use App\Enums\PurchaseStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -19,14 +20,18 @@ class GudangMasukController extends Controller
 
     public function purchaseIndex()
     {
-        $purchases = Purchase::where('status', 'pending')->with('supplier')->latest()->paginate(10);
+        $purchases = Purchase::where('status', PurchaseStatus::RECEIVED)
+                        ->whereNull('approved_by')
+                        ->with('supplier')
+                        ->latest()
+                        ->paginate(10);
         return view('pages.gudang.masuk.purchase_index', compact('purchases'));
     }
 
     public function approvePurchase(Request $request, Purchase $purchase)
     {
-        if ($purchase->status !== 'pending') {
-            return back()->with('error', 'Purchase is not pending.');
+        if ($purchase->status !== PurchaseStatus::RECEIVED || $purchase->approved_by !== null) {
+            return back()->with('error', 'Penerimaan barang tidak valid atau sudah diproses.');
         }
 
         try {
@@ -48,7 +53,6 @@ class GudangMasukController extends Controller
             }
 
             $purchase->update([
-                'status' => 'approved',
                 'approved_by' => auth()->id(),
                 'approved_at' => now(),
             ]);
