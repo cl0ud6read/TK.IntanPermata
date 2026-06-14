@@ -30,14 +30,7 @@ class UserForm extends Component
         ];
     }
 
-    #[On('open-modal')]
-    public function handleOpenModal($name): void
-    {
-        if ($name === 'user-form-modal' && !$this->isEditing) {
-            $this->create(); // Ensure we reset if opening for create
-        }
-    }
-
+    #[On('create-user')]
     public function create(): void
     {
         abort_if(auth()->user()->role !== 'admin', 403, 'Unauthorized action.');
