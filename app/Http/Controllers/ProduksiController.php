@@ -73,6 +73,17 @@ class ProduksiController extends Controller
         try {
             $produksi->status = $request->status;
             $produksi->save(); // Observer will validate transition
+
+            // Generate HasilProduksi if completed
+            if ($request->status === 'completed' && $produksi->hasilProduksi()->count() === 0) {
+                $produksi->hasilProduksi()->create([
+                    'product_id' => $produksi->product_id,
+                    'quantity_produced' => $produksi->target_quantity,
+                    'quantity_defect' => 0,
+                    'status' => 'pending_gudang'
+                ]);
+            }
+
             return back()->with('success', 'Status produksi diperbarui.');
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
