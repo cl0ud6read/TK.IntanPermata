@@ -70,7 +70,7 @@ class GudangKeluarController extends Controller
 
     public function approveSale(Request $request, Sale $sale)
     {
-        if ($sale->status !== 'pending') {
+        if ($sale->status !== \App\Enums\SaleStatus::PENDING) {
             return back()->with('error', 'Sale is not pending.');
         }
 
