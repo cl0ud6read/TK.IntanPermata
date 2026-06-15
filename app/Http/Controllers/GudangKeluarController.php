@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailProduksi;
 use App\Models\Sale;
 use App\Services\StockService;
-use App\Services\FinanceService;
+use App\Services\FinanceTransactionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,7 +14,7 @@ class GudangKeluarController extends Controller
     protected $stockService;
     protected $financeService;
 
-    public function __construct(StockService $stockService, FinanceService $financeService)
+    public function __construct(StockService $stockService, FinanceTransactionService $financeService)
     {
         $this->stockService = $stockService;
         $this->financeService = $financeService;
