@@ -80,7 +80,7 @@
                                         @if($produksi->status === 'pending')
                                             <!-- Check if all materials are supplied -->
                                             @php
-                                                $allSupplied = $produksi->detailProduksi->every(fn($item) => $item->status === 'supplied');
+                                                $allSupplied = $produksi->detailProduksi->every(fn($item) => $item->status === 'supplied' || $item->status === 'approved');
                                             @endphp
                                             
                                             @if($allSupplied)
@@ -157,7 +157,7 @@
                                                 <td class="px-4 py-3 text-center">
                                                     @if($detail->status === 'pending')
                                                         <span class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded">Menunggu Gudang</span>
-                                                    @elseif($detail->status === 'supplied')
+                                                    @elseif($detail->status === 'supplied' || $detail->status === 'approved')
                                                         <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">Tersalurkan</span>
                                                     @endif
                                                 </td>
