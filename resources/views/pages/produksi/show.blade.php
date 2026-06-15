@@ -59,10 +59,17 @@
                                                 'completed' => 'bg-green-100 text-green-800',
                                                 'failed' => 'bg-red-100 text-red-800',
                                             ];
+                                            $statusLabels = [
+                                                'pending' => 'TERTUNDA',
+                                                'in_progress' => 'BERJALAN',
+                                                'completed' => 'SELESAI',
+                                                'failed' => 'GAGAL',
+                                            ];
                                             $color = $statusColors[$produksi->status] ?? 'bg-gray-100 text-gray-800';
+                                            $label = $statusLabels[$produksi->status] ?? strtoupper($produksi->status);
                                         @endphp
                                         <span class="px-2 py-1 text-xs font-medium rounded {{ $color }}">
-                                            {{ strtoupper($produksi->status) }}
+                                            {{ $label }}
                                         </span>
                                     </dd>
                                 </div>

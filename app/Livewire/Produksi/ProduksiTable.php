@@ -63,10 +63,25 @@ final class ProduksiTable extends PowerGridComponent
                     'completed' => 'bg-green-100 text-green-800',
                     'failed' => 'bg-red-100 text-red-800',
                 ];
+                $statusLabels = [
+                    'pending' => 'TERTUNDA',
+                    'in_progress' => 'BERJALAN',
+                    'completed' => 'SELESAI',
+                    'failed' => 'GAGAL',
+                ];
                 $color = $statusColors[$model->status] ?? 'bg-gray-100 text-gray-800';
-                return '<span class="px-2 py-1 text-xs font-medium rounded ' . $color . '">' . strtoupper($model->status) . '</span>';
+                $label = $statusLabels[$model->status] ?? strtoupper($model->status);
+                return '<span class="px-2 py-1 text-xs font-medium rounded ' . $color . '">' . $label . '</span>';
             })
-            ->add('status_export', fn(Produksi $model) => strtoupper($model->status))
+            ->add('status_export', function(Produksi $model) {
+                $statusLabels = [
+                    'pending' => 'TERTUNDA',
+                    'in_progress' => 'BERJALAN',
+                    'completed' => 'SELESAI',
+                    'failed' => 'GAGAL',
+                ];
+                return $statusLabels[$model->status] ?? strtoupper($model->status);
+            })
             ->add('start_date_formatted', fn(Produksi $model) => $model->start_date ? $model->start_date->format('d/m/Y') : '-')
             ->add('created_at_formatted', fn(Produksi $model) => $model->created_at->format('d/m/Y'));
     }
@@ -112,10 +127,10 @@ final class ProduksiTable extends PowerGridComponent
         return [
             Filter::multiSelect('status_label', 'status')
                 ->dataSource(collect([
-                    ['value' => 'pending', 'text' => 'PENDING'],
-                    ['value' => 'in_progress', 'text' => 'IN PROGRESS'],
-                    ['value' => 'completed', 'text' => 'COMPLETED'],
-                    ['value' => 'failed', 'text' => 'FAILED'],
+                    ['value' => 'pending', 'text' => 'TERTUNDA'],
+                    ['value' => 'in_progress', 'text' => 'BERJALAN'],
+                    ['value' => 'completed', 'text' => 'SELESAI'],
+                    ['value' => 'failed', 'text' => 'GAGAL'],
                 ]))
                 ->optionValue('value')
                 ->optionLabel('text'),
