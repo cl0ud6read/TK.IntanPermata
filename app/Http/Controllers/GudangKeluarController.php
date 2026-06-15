@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\DetailProduksi;
 use App\Models\Sale;
 use App\Services\StockService;
+use App\Services\FinanceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class GudangKeluarController extends Controller
 {
     protected $stockService;
+    protected $financeService;
 
-    public function __construct(StockService $stockService)
+    public function __construct(StockService $stockService, FinanceService $financeService)
     {
         $this->stockService = $stockService;
+        $this->financeService = $financeService;
     }
 
     public function detailProduksiIndex()
@@ -93,6 +96,9 @@ class GudangKeluarController extends Controller
                 'status' => 'completed',
                 // Assuming sale has a processed_by or similar, else just update status
             ]);
+
+            // Sync with Finance (Income recorded upon dispatch)
+            $this->financeService->recordIncomeFromSale($sale);
 
             return redirect()->route('gudang.keluar.sale')->with('success', 'Barang jualan berhasil dikeluarkan dari gudang.');
         } catch (\Exception $e) {

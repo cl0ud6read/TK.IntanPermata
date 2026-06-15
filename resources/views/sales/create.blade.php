@@ -289,7 +289,7 @@
                         notes: ''
                     },
                     globalDiscount: 0,
-                    saleStatus: 'completed',
+                    saleStatus: 'pending',
                     isSubmitting: false,
 
                     // TomSelect Instances
@@ -780,30 +780,9 @@
 
                 <!-- Actions -->
                 <div class="mt-6 border-t border-gray-200 pt-4 space-y-4">
-                    <!-- Status Selection -->
+                    <input type="hidden" x-model="saleStatus" value="pending">
                     <div>
-                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">Status Penjualan</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button
-                                @click="saleStatus = 'completed'"
-                                class="px-4 py-2 text-sm font-medium rounded-md border flex items-center justify-center transition-colors"
-                                :class="saleStatus === 'completed' ? 'bg-green-600 text-white border-green-600 shadow-sm' : 'bg-white text-gray-700 border-gray-300 hover:bg-green-50'"
-                            >
-                                <svg x-show="saleStatus === 'completed'" class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                SELESAI
-                            </button>
-                            <button
-                                @click="saleStatus = 'pending'"
-                                class="px-4 py-2 text-sm font-medium rounded-md border flex items-center justify-center transition-colors"
-                                :class="saleStatus === 'pending' ? 'bg-yellow-500 text-white border-yellow-500 shadow-sm' : 'bg-white text-gray-700 border-gray-300 hover:bg-yellow-50'"
-                            >
-                                <svg x-show="saleStatus === 'pending'" class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                TERTUNDA
-                            </button>
-                        </div>
-                    </div>
-
-                    <button
+                        <button
                         @click="submitSale()"
                         :disabled="isSubmitting"
                         class="w-full flex justify-center items-center py-3 px-4 rounded-lg shadow-sm text-lg font-bold text-white focus:outline-none disabled:opacity-50 transition-colors"
