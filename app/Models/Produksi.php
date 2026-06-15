@@ -14,13 +14,8 @@ class Produksi extends Model
     public const INITIAL_STATE = 'pending';
     public const TERMINAL_STATES = ['completed', 'failed'];
     public const VALID_TRANSITIONS = [
-        'pending'          => ['waiting_material', 'mixing', 'failed'],
-        'waiting_material' => ['mixing', 'failed'],
-        'mixing'           => ['molding', 'failed'],
-        'molding'          => ['drying', 'failed'],
-        'drying'           => ['burning', 'failed'],
-        'burning'          => ['finishing', 'failed'],
-        'finishing'        => ['completed', 'failed'],
+        'pending'     => ['in_progress', 'failed'],
+        'in_progress' => ['completed', 'failed'],
     ];
 
     protected $fillable = [
